@@ -6,6 +6,9 @@
   <title>three.js</title>
 </head>
 <body style="height: 100vh">
+  <div class="text">
+    <h1>don't believe everything you think</h1>
+  </div>
 
 </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -15,10 +18,10 @@
     let scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-    camera.position.z = 4;
+    camera.position.z = 38;
 
     let renderer = new THREE.WebGLRenderer({antialias: true});
-      renderer.setClearColor("#e5e5e5");
+      renderer.setClearColor("#131313");
       renderer.setSize( window.innerWidth, window.innerHeight );
       document.body.appendChild( renderer.domElement );
 
@@ -28,13 +31,13 @@
         camera.updateProjectionMatrix();
       })
 
-      const raycaster = new THREE.Raycaster();
-      const mouse = new THREE.Vector2();
+      // const raycaster = new THREE.Raycaster();
+      // const mouse = new THREE.Vector2();
 
-      var geometry = new THREE.BoxGeometry(1, 1, 1);
-      var material = new THREE.MeshLambertMaterial({color: 0xf7f7f7});
-      // var mesh = new THREE.Mesh(geometry, material);
-      // scene.add(mesh)
+      var geometry = new THREE.TorusKnotGeometry( 13, 4, 40, 40 );
+      var material = new THREE.MeshNormalMaterial();
+      var mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh)
 
       // mesh.rotation.set(45,0,0);
       // mesh.scale.set(1,2,1);
@@ -43,51 +46,51 @@
       // mesh.position.y = 2;
       // mesh.position.z = 2;
 
-      meshX = -10;
-      for(var i = 0; i<10; i++) {
-        var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.x = (Math.random() - 0.5) * 10;
-        mesh.position.y = (Math.random() - 0.5) * 10;
-        mesh.position.z = (Math.random() - 0.5) * 10;
-        scene.add(mesh)
-        meshX+=1;
-      }
+      // meshX = -10;
+      // for(var i = 0; i<10; i++) {
+      //   var mesh = new THREE.Mesh(geometry, material);
+      //   mesh.position.x = (Math.random() - 0.5) * 10;
+      //   mesh.position.y = (Math.random() - 0.5) * 10;
+      //   mesh.position.z = (Math.random() - 0.5) * 10;
+      //   scene.add(mesh)
+      //   meshX+=1;
+      // }
 
 
       var light = new THREE.PointLight(0xFFFFFF, 1, 1000);
       light.position.set(0,0,0)
       scene.add(light);
 
-      var light = new THREE.PointLight(0xFFFFFF, 2, 1000);
-      light.position.set(0,0,25)
-      scene.add(light);
+      // var light = new THREE.PointLight(0xFFFFFF, 2, 1000);
+      // light.position.set(0,0,25)
+      // scene.add(light);
 
       const render = () => {
         requestAnimationFrame(render);
-        // mesh.rotation.x += 0.05;
-        // mesh.rotation.y += 0.01;
-        // mesh.scale.x -= 0.01;
+        mesh.rotation.x += 0.03;
+        mesh.rotation.y += 0.03;
+        mesh.scale.x -= 0.004;
         renderer.render(scene, camera)
       }
 
-      function onMouseMove(event) {
-        event.preventDefault()
-        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-        mouse.y = ( event.clientX / window.innerWidth ) * 2 - 1;
+      // function onMouseMove(event) {
+      //   event.preventDefault()
+      //   mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+      //   mouse.y = ( event.clientX / window.innerWidth ) * 2 - 1;
 
-        raycaster.setFromCamera(mouse, camera);
+      //   raycaster.setFromCamera(mouse, camera);
 
-        const intersects = raycaster.intersectObjects(scene.children, true);
-        for (var i = 0; i < intersects.length; i++) {
-          this.tl = new TimelineMax();
-          this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut})
-          this.tl.to(intersects[i].object.scale, .5, {x: 5, ease: Expo.easeOut})
-          this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut})
-          this.tl.to(intersects[i].object.rotate, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5")
+      //   const intersects = raycaster.intersectObjects(scene.children, true);
+      //   for (var i = 0; i < intersects.length; i++) {
+      //     this.tl = new TimelineMax();
+      //     this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut})
+      //     this.tl.to(intersects[i].object.scale, .5, {x: 5, ease: Expo.easeOut})
+      //     this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut})
+      //     this.tl.to(intersects[i].object.rotate, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5")
 
-        }
-      }
-      window.addEventListener('click', onMouseMove)
+      //   }
+      // }
+      // window.addEventListener('click', onMouseMove)
       render();
 
   </script>
